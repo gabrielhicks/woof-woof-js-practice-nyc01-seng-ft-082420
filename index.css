@@ -29,7 +29,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 2em;
-  border: 1px solid blue;
+  border: 2px solid blue;
 }
 
 #dog-summary-container {
@@ -50,4 +50,9 @@
 
 body {
   margin: 0;
+}
+
+span {
+  text-align: center;
+  font-weight: bold;
 }
