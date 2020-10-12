@@ -2,32 +2,57 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("true")
     fetchPups();
     eventHandler();
+    submitHandler();
 })
 const pupsURL = "http://localhost:3000/pups/"
 
 function eventHandler() {
     document.addEventListener("click", e => {
+        e.preventDefault()
         let target = e.target
         if(target.matches("span")) {
             showPup(target)
         }
-        if(target.matches("#goodbad")) {
+        // if(target.matches("#goodbad")) {
+        //     let words = target.innerText
+        //     let word = words.split(" ")[0]
+        //     if(word == "Good") {
+        //         let boolean = true
+        //         let pup = target.parentElement
+        //         changeMood(pup, boolean)
+        //     } else {
+        //         let boolean = false
+        //         let pup = target.parentElement
+        //         changeMood(pup, boolean)
+        //     }
+        // }
+    })
+}
+
+function submitHandler() {
+    document.addEventListener("click", e => {
+        e.preventDefault()
+        let target = e.target
+        if(target.matches("span")) {
+            console.log("WDF")
+        } else {
+            console.log(target)
             let words = target.innerText
             let word = words.split(" ")[0]
-            if(word == "Good") {
+        if(word == "Good") {
                 let boolean = true
                 let pup = target.parentElement
-                changeMood(pup, boolean)
-            } else {
+                changeMood(pup, boolean, target)
+        } else {
                 let boolean = false
                 let pup = target.parentElement
-                changeMood(pup, boolean)
+                changeMood(pup, boolean, target)
             }
         }
     })
 }
 
-function changeMood(pup, boolean) {
+function changeMood(pup, boolean, target) {
     const oldMood = pup.children[2].innerText
     let newMood = !boolean
     fetch(pupsURL + pup.id, {
@@ -40,15 +65,15 @@ function changeMood(pup, boolean) {
             {
                 "isGoodDog": newMood
             })
-        // .then(mood => {
-        //     console.log(mood)
-        //     // if(mood) {
-        //     //     oldMood = "Bad Dog!"
-        //     // } else {
-        //     //     oldMood = "Good Dog!"
-        //     // }
-        // })
-    })
+        })
+        .then(mood => mood.json())
+        .then(mood => {
+            if(target.innerText == "Good Dog!") {
+                target.innerText = "Bad Dog!"
+            } else {
+                target.innerText = "Good Dog!"
+            }
+        })
 }
 
 function showPup(pup) {
