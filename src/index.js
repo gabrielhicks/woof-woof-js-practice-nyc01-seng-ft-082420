@@ -35,25 +35,24 @@ function submitHandler() {
         let target = e.target
         if(target.matches("span")) {
             console.log("WDF")
-        } else {
+        } else if (target.matches("button")){
             console.log(target)
             let words = target.innerText
             let word = words.split(" ")[0]
         if(word == "Good") {
                 let boolean = true
                 let pup = target.parentElement
-                changeMood(pup, boolean, target)
+                // changeMood(pup, boolean, target)
         } else {
                 let boolean = false
                 let pup = target.parentElement
-                changeMood(pup, boolean, target)
+                // changeMood(pup, boolean, target)
             }
         }
     })
 }
 
 function changeMood(pup, boolean, target) {
-    const oldMood = pup.children[2].innerText
     let newMood = !boolean
     fetch(pupsURL + pup.id, {
         method: "PATCH",
@@ -68,11 +67,12 @@ function changeMood(pup, boolean, target) {
         })
         .then(mood => mood.json())
         .then(mood => {
-            if(target.innerText == "Good Dog!") {
-                target.innerText = "Bad Dog!"
-            } else {
-                target.innerText = "Good Dog!"
-            }
+            // if(target.innerText == "Good Dog!") {
+            //     target.innerText = "Bad Dog!"
+            // } else {
+            //     target.innerText = "Good Dog!"
+            // }
+            console.log(mood)
         })
 }
 
@@ -80,7 +80,7 @@ function showPup(pup) {
     const dogInfo = document.getElementById(pup.dataset.id)
     if (dogInfo.style.display === "none") {
         dogInfo.style.display = "block";
-    } else {
+    }  else {
         dogInfo.style.display = "none";
         }
 }
